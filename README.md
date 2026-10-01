@@ -9,7 +9,7 @@ Cópia visual da home de [winebarvino.com.br](https://www.winebarvino.com.br/) (
 | `index.html` | Estrutura da página (header, hero, conceito, cards, franquias, casas, unidades, galeria, rodapé) |
 | `style.css`  | Estilos mobile first (breakpoints em 480px e 768px), todos escopados em classes `.vn-*` |
 | `main.js`    | Menu mobile, rolagem suave, parallax dos fundos, galeria horizontal e renderização das listas |
-| `widget.js`  | Script do widget de chat (colado sem alterações) |
+| `widget.js`  | Script do widget de chat Cora / CHANNEL (colado sem alterações) |
 
 ## Como rodar
 
@@ -26,5 +26,7 @@ Depois abra <http://localhost:4317>.
 ## Observações
 
 - As imagens são carregadas direto de `static.wixstatic.com` (hotlink), com `loading="lazy"` abaixo da dobra.
-- A fonte original é **Flama Semicondensed** (comercial, não está no Google Fonts). Por isso a demo usa **Barlow Semi Condensed**, a alternativa mais próxima no Google Fonts, nos pesos 800 (Extrabold), 400 (Book) e 300 (Light).
+- A fonte é a mesma do original, **Flama Semicondensed** (Extrabold, Book e Light), carregada dos arquivos que o próprio site Wix usa em `static.wixstatic.com/ufonts/`. Se esses arquivos ficarem indisponíveis, a página cai para **Barlow / Barlow Semi Condensed** (Google Fonts), que têm métrica parecida.
+- No desktop, como no original, o cabeçalho rola junto com a página, o botão "voltar ao topo" fica fixo na tela e as fotos de fundo têm parallax a 20% da velocidade da rolagem.
+- O bloco vazio com o formulário POWR não configurado ("Create a Form"), que aparece no original logo acima do rodapé, foi omitido de propósito.
 - Nenhum elemento da página usa `z-index` acima de 300, então o widget (9998/9999) sempre fica por cima.

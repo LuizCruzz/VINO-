@@ -9,10 +9,31 @@
     #fafafa  fundo da seção conceito / texto claro
     #ffd79a  hover (menu e botão) / botão "voltar ao topo"
     #242323  nomes dos estados
-  Fonte original: Flama Semicondensed (Extrabold / Book / Light, comercial).
-  Substitutas Google Fonts, escolhidas pela métrica (largura e altura de caixa-alta a ±2%):
+  Fonte original: Flama Semicondensed (Extrabold / Book / Light), carregada dos mesmos
+  arquivos que o site Wix usa. Cada peso é uma família separada, como no Wix: assim o
+  "negrito" (700) do Book é sintetizado a partir do Book, igual ao original.
+  Fallback Google Fonts com métrica próxima:
     Extrabold -> Barlow 800 · Book -> Barlow Semi Condensed 400/700 · Light -> Barlow Semi Condensed 300.
 */
+
+@font-face {
+  font-family: 'Vino Flama Extrabold';
+  src: url('https://static.wixstatic.com/ufonts/ec593b_beda20badbf14ac68b417c386586a1b6/woff2/file.woff2') format('woff2');
+  font-weight: 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Vino Flama Book';
+  src: url('https://static.wixstatic.com/ufonts/878c8f_1d184dcd6d2048c3a59e2cbbd47c0b56/woff2/file.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Vino Flama Light';
+  src: url('https://static.wixstatic.com/ufonts/c9fcc7_67571cc590994b6db2b22beec6e2720d/woff2/file.woff2') format('woff2');
+  font-weight: 300;
+  font-display: swap;
+}
 
 :root {
   --vn-wine: #700d2c;
@@ -21,8 +42,9 @@
   --vn-gold: #ffd79a;
   --vn-ink: #000;
   --vn-ink-2: #242323;
-  --vn-font: 'Barlow Semi Condensed', 'Arial Narrow', Arial, sans-serif;
-  --vn-font-head: 'Barlow', 'Barlow Semi Condensed', Arial, sans-serif;
+  --vn-font: 'Vino Flama Book', 'Barlow Semi Condensed', 'Arial Narrow', Arial, sans-serif;
+  --vn-font-head: 'Vino Flama Extrabold', 'Barlow', 'Barlow Semi Condensed', Arial, sans-serif;
+  --vn-font-light: 'Vino Flama Light', 'Barlow Semi Condensed', 'Arial Narrow', Arial, sans-serif;
   --vn-header-h: 74px;
 }
 
@@ -45,7 +67,7 @@ body.vn-body {
 .vn-body .vn-main,
 .vn-body .vn-footer { display: block; }
 
-.vn-light { font-family: var(--vn-font); font-weight: 300; }
+.vn-light { font-family: var(--vn-font-light); font-weight: 300; }
 .vn-strong { font-weight: 700; }
 .vn-br { display: none; }
 
@@ -256,7 +278,7 @@ body.vn-body {
   position: relative;
   list-style: none; margin: 0; padding: 0;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   gap: 4px;
 }
 .vn-houses > .vn-parallax .vn-parallax__img { opacity: .1; }
@@ -397,6 +419,10 @@ body.vn-body {
 
   .vn-br { display: inline; }
 
+  /* no desktop o cabeçalho do original rola junto com a página (não é fixo) */
+  html { scroll-padding-top: 0; }
+  .vn-header { position: absolute; }
+
   .vn-header__inner { padding: 0 0 12px 46px; box-sizing: border-box; justify-content: flex-start; }
   .vn-header__logo-img { width: 79px; height: 57px; }
   .vn-burger { display: none; }
@@ -413,24 +439,30 @@ body.vn-body {
 
   .vn-hero { height: 623px; }
   .vn-parallax__img, .vn-hero .vn-parallax__img, .vn-franq__band .vn-parallax__img { height: 100vh; min-height: 100%; }
-  .vn-hero__title { left: 240px; top: 218px; width: 330px; font-size: 41px; line-height: 36.9px; }
+  .vn-hero__title { left: 240px; top: 225px; width: 330px; font-size: 41px; line-height: 36.9px; }
 
   /* conceito */
   .vn-concept { padding: 45px 0 126px; }
   .vn-totop {
     display: flex; align-items: center; justify-content: center;
-    position: absolute; z-index: 3; top: 45px; left: calc(50% + 373px);
+    position: fixed; z-index: 150; top: min(776px, calc(100vh - 124px)); left: calc(50% + 336px);
     width: 47px; height: 47px; border-radius: 50%;
     background: var(--vn-gold); color: var(--vn-wine);
   }
   .vn-totop__icon { display: block; width: 25px; height: 25px; }
 
   .vn-crow { display: block; position: relative; }
-  .vn-crow__media { position: absolute; top: 0; padding: 0; }
-  .vn-crow__img { height: 100%; max-width: none; }
+  /* como no Wix, a foto tem largura fixa maior que a caixa e é recortada por ela */
+  .vn-crow__media { position: absolute; top: 0; padding: 0; overflow: hidden; }
+  .vn-crow__img { position: absolute; top: 0; height: 100%; max-width: none; }
+  .vn-crow--1 .vn-crow__img { right: 0; width: 902px; }
+  .vn-crow--2 .vn-crow__img { left: 0; width: 983px; }
+  .vn-crow--3 .vn-crow__img { right: 0; width: 884px; }
   .vn-crow .vn-crow__text { padding: 0; }
   .vn-crow .vn-title, .vn-crow .vn-rule, .vn-crow .vn-copy { padding-left: 0; margin-left: 0; }
-  .vn-crow .vn-title { font-size: 41px; line-height: 36.9px; max-width: none; }
+  .vn-crow .vn-title { position: relative; top: 7px; font-size: 41px; line-height: 36.9px; max-width: none; }
+  .vn-crow--1 .vn-copy { margin-left: 3px; }
+  .vn-crow--3 .vn-copy { max-width: none; }
   .vn-rule { width: 186px; border-top-width: 7px; }
   .vn-copy { font-size: 17px; line-height: 23.8px; max-width: none; margin: 0; }
   .vn-copy--sm { font-size: 17px; line-height: 23.8px; }
@@ -449,7 +481,7 @@ body.vn-body {
 
   .vn-crow--3 { height: 392px; margin-top: 54px; }
   .vn-crow--3 .vn-crow__media { left: 0; width: calc(50% - 50px); height: 392px; }
-  .vn-crow--3 .vn-crow__text { margin-left: calc(50% + 23px); padding-top: 2px; width: 410px; max-width: calc(50% - 40px); }
+  .vn-crow--3 .vn-crow__text { margin-left: calc(50% + 23px); padding-top: 2px; width: 425px; max-width: calc(50% - 40px); }
   .vn-crow--3 .vn-rule { margin: 32px 0 28px; }
 
   /* cards */
@@ -472,14 +504,14 @@ body.vn-body {
   /* franquias */
   .vn-franq { padding: 0; height: 677px; }
   .vn-franq::before { display: none; }
-  .vn-franq__band { display: block; height: 180px; bottom: auto; }
+  .vn-franq__band { display: block; }
   .vn-franq__box {
     position: absolute; top: -60px;
     left: calc(50% - 261px);
-    width: 751px; max-width: none; height: 757px;
+    width: 751px; max-width: none; height: 737px;
     margin: 0; padding: 60px 0 0 99px; box-sizing: border-box;
   }
-  .vn-franq__title { font-size: 41px; line-height: 36.9px; }
+  .vn-franq__title { position: relative; top: 4px; font-size: 41px; line-height: 36.9px; }
   .vn-franq .vn-rule { width: 186px; border-top-width: 7px; margin: 22px 0 61px 3px; }
   .vn-franq__text { width: 400px; margin-left: 58px; font-size: 16px; line-height: 22.4px; }
   .vn-franq__p { margin: 0 0 22.4px; }
@@ -498,7 +530,7 @@ body.vn-body {
   .vn-units__map { position: absolute; top: 39px; left: calc(50% - 266px); width: 612px; max-width: none; height: 764px; }
   .vn-units__list {
     columns: 3; column-gap: 0;
-    width: 910px; margin: 227px 0 0 84px; padding: 0;
+    width: 910px; margin: 229px 0 0 84px; padding: 0;
   }
   .vn-state { margin-bottom: 26px; width: 290px; }
   .vn-state--gap { margin-top: 26px; }
@@ -508,6 +540,14 @@ body.vn-body {
   .vn-state--col3, .vn-state--col3 ~ .vn-state { margin-left: 0; }
   .vn-state--col3 { break-before: column; padding-top: 246px; }
   .vn-state__name, .vn-state__city { font-size: 16px; line-height: 24px; }
+  /* espaçamentos irregulares do original, medidos estado a estado */
+  .vn-units__list .vn-state--gap { margin-top: 0; }
+  .vn-units__list .vn-state:nth-child(1) { margin-bottom: 28px; }
+  .vn-units__list .vn-state:nth-child(2) { margin-bottom: 46px; }
+  .vn-units__list .vn-state:nth-child(4),
+  .vn-units__list .vn-state:nth-child(5) { margin-bottom: 21px; }
+  .vn-units__list .vn-state:nth-child(9) { margin-bottom: 41px; }
+  .vn-state--col3 .vn-state__name { margin-left: -8px; }
 
   /* galeria */
   .vn-gallery { --u: 1px; }

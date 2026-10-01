@@ -161,14 +161,15 @@
       var target = id === 'topo' ? document.body : document.getElementById(id);
       if (!target) return;
       e.preventDefault();
-      var offset = id === 'topo' ? 0 : target.getBoundingClientRect().top + window.pageYOffset - header.offsetHeight;
+      var headerH = getComputedStyle(header).position === 'fixed' ? header.offsetHeight : 0;
+      var offset = id === 'topo' ? 0 : target.getBoundingClientRect().top + window.pageYOffset - headerH;
       window.scrollTo({ top: offset, behavior: 'smooth' });
       if (history.replaceState) history.replaceState(null, '', id === 'topo' ? location.pathname : '#' + id);
     });
   }
 
-  // "Reveal" background effect from the Wix original: the photo stays pinned to the
-  // viewport while its section scrolls over it. Desktop only, like the original.
+  // Parallax do original Wix: a foto anda a 20% da velocidade da rolagem
+  // (topo da foto na viewport = 0.2 × topo da seção). Só no desktop, como no original.
   function setupParallax() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var layers = [].slice.call(document.querySelectorAll('.vn-parallax'));
@@ -184,7 +185,7 @@
         if (!desktop.matches) { img.style.transform = ''; return; }
         var r = layer.getBoundingClientRect();
         if (r.bottom < -50 || r.top > vh + 50) return;
-        img.style.transform = 'translate3d(0,' + (-r.top).toFixed(1) + 'px,0)';
+        img.style.transform = 'translate3d(0,' + (-0.8 * r.top).toFixed(1) + 'px,0)';
       });
     }
     function onScroll() {
